@@ -1,0 +1,47 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model StyleCopy {
+  copiedAt        DateTime?
+  copiedCss       Json?
+  createdAt       DateTime  @default(now())
+  elementSelector String?
+  id              String    @id @default(cuid())
+  updatedAt       DateTime  @updatedAt
+}
+
+model CssInspection {
+  createdAt       DateTime  @default(now())
+  cssProperties   Json?
+  elementSelector String?
+  id              String    @id @default(cuid())
+  inspectedAt     DateTime?
+  updatedAt       DateTime  @updatedAt
+}
+
+model PerformanceInsight {
+  createdAt  DateTime  @default(now())
+  id         String    @id @default(cuid())
+  metricName String?
+  recordedAt DateTime?
+  updatedAt  DateTime  @updatedAt
+  value      Float?
+}
+
+model User {
+  createdAt DateTime @default(now())
+  email     String?  @unique
+  firstName String?
+  id        String   @id @default(cuid())
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
